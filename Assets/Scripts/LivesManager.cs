@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class LivesManager : MonoBehaviour
@@ -18,10 +19,18 @@ public class LivesManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(death)
+        if(lives > 0)
         {
-            lives--;
-            Destroy(livesLeft[lives-1]);
+            if(death)
+            {
+                lives--;
+                Destroy(livesLeft[lives - 1]);
+                death = false;
+            }
+            
+        } else
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }

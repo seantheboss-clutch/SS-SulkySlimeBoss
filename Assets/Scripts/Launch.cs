@@ -10,13 +10,14 @@ public class Launch : MonoBehaviour
     public Text hRotation;
     public Text vRotation;
     public int speed;
-    public int mult;
+    public int mult = 600;
     public Vector3 startPos;
     public bool launched;
     public Quaternion rotation;
     public Vector3 force;
     public float xQuat = 0;
     public float yQuat = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,31 +50,44 @@ public class Launch : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            mult += 1/10;
+            mult += 1;
         }
-        if (Input.GetMouseButton(1))
+        if (Input.GetKey("up"))
         {
             xQuat++;
             print(xQuat);
         }
-
+        if (Input.GetKey("down"))
+        {
+            xQuat--;
+            print(xQuat);
+        }
         if (mult >= 100 || Input.GetMouseButtonUp(0) || xQuat >= 358)
         {
             rotation = Quaternion.Euler(-xQuat, yQuat, 0f);
             force = Vector3.forward;
             force = rotation * force;
-            RaycastHit hit;
-            Physics.Raycast(transform.position, -Vector3.up, out hit);
             playerRb.velocity = transform.TransformDirection(force * speed * mult);
+            playerRb.useGravity = true;
         }
-        if (this.CompareTag("terrain"))
+       
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(this.CompareTag("obstacle"))
         {
-            Destroy(player);
-            launched = false;
-            Instantiate(player, startPos, this.transform.rotation);
-            this.GetComponent<LivesManager>().death = true;
+            Invoke("reSpawn", 3f);
+
         }
     }
+    void reSpawn()
+    {
+        Destroy(player);
+        launched = false;
+        Instantiate(player, startPos, this.transform.rotation);
+        this.GetComponent<LivesManager>().death = true;
+    }
+    
     //IEnumerator 
 
 }
