@@ -12,10 +12,9 @@ public class ObstacleBehaviors : MonoBehaviour
     public int colCount = 1;
     public int expect = 7;
     public int c;
-    public float score;
-    public Text scoreText;
     public Vector3 newPos = new Vector3();
-    public float xSpaceO;
+   
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,15 +48,5 @@ public class ObstacleBehaviors : MonoBehaviour
         //Column(colCount);
         startPos.x += xMargin;
         startPos.y -= (colCount * yMargin);
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        newPos = this.transform.position;
-        if (newPos != startPos)
-        {
-            xSpaceO = Mathf.Abs(Mathf.Round(newPos.x - startPos.x));
-            score += xSpaceO * 100;
-            scoreText.text = score.ToString();
-        }
     }
 }

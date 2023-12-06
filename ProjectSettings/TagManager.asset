@@ -6,6 +6,7 @@ TagManager:
   tags:
   - terrain
   - obstacle
+  - collectable
   layers:
   - Default
   - TransparentFX

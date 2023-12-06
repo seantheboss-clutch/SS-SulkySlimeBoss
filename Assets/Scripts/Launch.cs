@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Launch : MonoBehaviour
 {
@@ -10,13 +11,17 @@ public class Launch : MonoBehaviour
     public Text hRotation;
     public Text vRotation;
     public int speed;
-    public int mult = 600;
+    public int mult = 70;
     public Vector3 startPos;
     public bool launched;
     public Quaternion rotation;
     public Vector3 force;
     public float xQuat = 0;
     public float yQuat = 0;
+    public int score;
+    public Text scoreText;
+    public bool reset;
+    public int count = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -48,9 +53,11 @@ public class Launch : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(1))
         {
             mult += 1;
+            count += 1;
+            print(count);
         }
         if (Input.GetKey("up"))
         {
@@ -62,32 +69,43 @@ public class Launch : MonoBehaviour
             xQuat--;
             print(xQuat);
         }
-        if (mult >= 100 || Input.GetMouseButtonUp(0) || xQuat >= 358)
+        if (Input.GetMouseButtonDown(0) && count >= 1)
         {
+            print(count);
+            count = 0;
+            print(count);
             rotation = Quaternion.Euler(-xQuat, yQuat, 0f);
             force = Vector3.forward;
             force = rotation * force;
             playerRb.velocity = transform.TransformDirection(force * speed * mult);
             playerRb.useGravity = true;
+            
         }
        
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(this.CompareTag("obstacle"))
+        if(collision.gameObject.tag == "obstacle")
         {
-            Invoke("reSpawn", 3f);
-
+            mult = 0;
+            score += 100;
+            count = 0;
+            scoreText.text = score.ToString();
         }
+        if(collision.gameObject.tag == "collectable")
+        {
+            //SceneManager.LoadScene(2);
+        }
+        Invoke("reSpawn", 3f);
     }
     void reSpawn()
     {
-        Destroy(player);
         launched = false;
-        Instantiate(player, startPos, this.transform.rotation);
-        this.GetComponent<LivesManager>().death = true;
+        playerRb.velocity = Vector3.zero;
+        playerRb.useGravity = false;
+        player.transform.position = startPos;
+        player.GetComponent<LivesManager>().death = true;
+        count = 0;
     }
-    
-    //IEnumerator 
 
 }

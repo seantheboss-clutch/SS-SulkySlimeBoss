@@ -21,10 +21,12 @@ public class LivesManager : MonoBehaviour
     {
         if(lives > 0)
         {
-            if(death)
+            if (death)
             {
                 lives--;
+                
                 Destroy(livesLeft[lives - 1]);
+                print(livesLeft[lives - 1]);
                 death = false;
             }
             
