@@ -91,10 +91,13 @@ public class Launch : MonoBehaviour
             score += 100;
             count = 0;
             scoreText.text = score.ToString();
+            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<ObstacleBehaviors>().odeath = true;
         }
         if(collision.gameObject.tag == "collectable")
         {
             //SceneManager.LoadScene(2);
+            player.GetComponent<capLaunch>().level = true;
         }
         Invoke("reSpawn", 3f);
     }
