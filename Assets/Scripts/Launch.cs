@@ -26,6 +26,7 @@ public class Launch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+         /*levelSwitch = false;*/
         startPos = transform.position;
         launched = false;
         force = new Vector3(60f, 0f, 0f);
@@ -85,21 +86,21 @@ public class Launch : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "obstacle")
-        {
-            mult = 0;
-            score += 100;
-            count = 0;
-            scoreText.text = score.ToString();
-            Destroy(collision.gameObject);
-            collision.gameObject.GetComponent<ObstacleBehaviors>().odeath = true;
-        }
-        if(collision.gameObject.tag == "collectable")
-        {
-            //SceneManager.LoadScene(2);
-            player.GetComponent<capLaunch>().level = true;
-        }
-        Invoke("reSpawn", 3f);
+       if (collision.gameObject.tag == "obstacle")
+       {
+          mult = 0;
+          score += 100;
+          count = 0;
+          scoreText.text = score.ToString();
+          Destroy(collision.gameObject);
+          collision.gameObject.GetComponent<ObstacleBehaviors>().odeath = true;
+       }
+       if (collision.gameObject.tag == "collectable")
+       {
+          score += 500;
+       }
+         
+       Invoke("reSpawn", 3f);
     }
     void reSpawn()
     {

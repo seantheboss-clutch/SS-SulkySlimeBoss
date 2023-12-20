@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class capLaunch : MonoBehaviour
 {
+    public GameObject capsule;
     public bool level;
     public float xFloat;
     public float yFloat;
@@ -17,7 +18,7 @@ public class capLaunch : MonoBehaviour
         xFloat = Random.Range(200*lmult,900*lmult);
         yFloat = Random.Range(200*lmult, 900*lmult);
         zFloat = Random.Range(200*lmult, 400);
-        Instantiate(this, new Vector3(xFloat, yFloat, zFloat), Quaternion.identity);
+        Instantiate(capsule, new Vector3(xFloat, yFloat, zFloat), Quaternion.identity);
     }
 
     // Update is called once per frame

@@ -9,6 +9,7 @@ public class LivesManager : MonoBehaviour
 {
     public GameObject[] livesLeft;
     public bool death;
+    public bool nextLevel;
     public int lives = 3;
     // Start is called before the first frame update
     void Start()
@@ -25,14 +26,14 @@ public class LivesManager : MonoBehaviour
             {
                 lives--;
                 
-                Destroy(livesLeft[lives - 1]);
-                print(livesLeft[lives - 1]);
+                livesLeft[lives].SetActive(false);
                 death = false;
             }
             
         } else
         {
-            SceneManager.LoadScene(0);
+           
+                SceneManager.LoadScene(0);
         }
     }
 }
