@@ -70,6 +70,7 @@ public class Launch : MonoBehaviour
             xQuat--;
             print(xQuat);
         }
+        //The player launches
         if (Input.GetMouseButtonDown(0) && count >= 1)
         {
             print(count);
@@ -98,7 +99,12 @@ public class Launch : MonoBehaviour
        if (collision.gameObject.tag == "collectable")
        {
           score += 500;
-       }
+/*            SceneManager.LoadScene("Level2");
+*/       }
+       if(score >= 500)
+        {
+            SceneManager.LoadScene("Level2");
+        }
          
        Invoke("reSpawn", 3f);
     }

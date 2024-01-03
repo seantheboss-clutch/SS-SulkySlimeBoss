@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class switchScene : MonoBehaviour
 {
+    public string naem;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,10 +16,11 @@ public class switchScene : MonoBehaviour
     {
         /*if(Input.GetMouseButton
         SceneManager.LoadScene(1);*/
+        
     }
-    void switchSwitchy()
+    public void switchSwitchy()
     {
-        //SceneManager.LoadScene(1);
+        SceneManager.LoadScene(naem);
     }
     /*On*/
 }
