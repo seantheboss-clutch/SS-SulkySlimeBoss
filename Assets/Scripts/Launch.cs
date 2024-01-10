@@ -81,9 +81,10 @@ public class Launch : MonoBehaviour
             force = rotation * force;
             playerRb.velocity = transform.TransformDirection(force * speed * mult);
             playerRb.useGravity = true;
-            
+            Invoke("reSpawn", 4f);
+
         }
-       
+
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -96,6 +97,7 @@ public class Launch : MonoBehaviour
           Destroy(collision.gameObject);
           collision.gameObject.GetComponent<ObstacleBehaviors>().odeath = true;
        }
+        score += 50;
        if (collision.gameObject.tag == "collectable")
        {
           score += 500;
@@ -108,6 +110,7 @@ public class Launch : MonoBehaviour
          
        Invoke("reSpawn", 3f);
     }
+ 
     void reSpawn()
     {
         launched = false;
