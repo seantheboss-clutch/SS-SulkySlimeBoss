@@ -7,12 +7,13 @@ using UnityEngine.SceneManagement;
 public class Launch : MonoBehaviour
 {
     public GameObject player;
+    public GameObject cylinder;
     public Rigidbody playerRb;
     public Text hRotation;
     public Text vRotation;
     public Text multT;
     public int speed;
-    public int mult = 70;
+    public int mult = 100;
     public Vector3 startPos;
     public bool launched;
     public Quaternion rotation;
@@ -22,7 +23,7 @@ public class Launch : MonoBehaviour
     public int score;
     public Text scoreText;
     public bool reset;
-    public int count = 0;
+    public int count = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +31,7 @@ public class Launch : MonoBehaviour
          /*levelSwitch = false;*/
         startPos = transform.position;
         launched = false;
-        force = new Vector3(60f, 0f, 0f);
+        force = new Vector3(0f, 60f, 0f);
        
 
     }
@@ -38,19 +39,28 @@ public class Launch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hRotation.text = yQuat.ToString();
-        vRotation.text = xQuat.ToString();
+        vRotation.text = yQuat.ToString();
+        hRotation.text = xQuat.ToString();
         multT.text = mult.ToString();
         if (launched == false)
         {
             if (Input.GetKey("left"))
             {
-                yQuat--;
+                if(xQuat != -45)
+                {
+                    xQuat--;
+                    CrotationY(-1);
+                }
                /* print(yQuat);*/
             }
             if (Input.GetKey("right"))
             {
-                yQuat++;
+                if(xQuat != 45)
+                {
+                    xQuat++;
+                    CrotationY(1);
+                }
+                
 /*                print(yQuat);
 */            }
         }
@@ -63,21 +73,28 @@ public class Launch : MonoBehaviour
 */        }
         if (Input.GetKey("up"))
         {
-            xQuat++;
-/*            print(xQuat);
-*/        }
+            if (yQuat != 45)
+            {
+                yQuat++;
+                CrotationX(-1);
+            }
+        }
         if (Input.GetKey("down"))
         {
-            xQuat--;
-/*            print(xQuat);
-*/        }
+            if (yQuat != -45)
+            {
+                yQuat--;
+                CrotationX(1);
+            }
+        }
         //The player launches
-        if (Input.GetMouseButtonDown(0) && count >= 1)
+        if (Input.GetMouseButtonDown(0) && count >= 0)
         {
 /*            print(count);
 */            count = 0;
 /*            print(count);
-*/            rotation = Quaternion.Euler(-xQuat, yQuat, 0f);
+*/            rotation = Quaternion.Euler(yQuat, xQuat, 0f);
+            print(rotation);
             force = Vector3.forward;
             force = rotation * force;
             playerRb.velocity = transform.TransformDirection(force * speed * mult);
@@ -150,6 +167,16 @@ public class Launch : MonoBehaviour
             player.GetComponent<LivesManager>().death = true;
         }
         count = 0;
+    }
+    void CrotationX(float r)
+    {
+        //cylinder.transform.Rotate(Vector3.right*r);
+        player.transform.Rotate(Vector3.right * r);
+    }
+    void CrotationY(float r)
+    {
+        //cylinder.transform.Rotate(Vector3.up * r);
+        player.transform.Rotate(Vector3.up * r);
     }
 
 }
