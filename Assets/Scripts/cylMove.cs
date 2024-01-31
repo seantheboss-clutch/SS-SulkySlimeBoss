@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class score : MonoBehaviour
+public class cylMove : MonoBehaviour
 {
-    public int scoreInt = 0;
     // Start is called before the first frame update
     void Start()
     {

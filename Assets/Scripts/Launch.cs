@@ -7,8 +7,12 @@ using UnityEngine.SceneManagement;
 public class Launch : MonoBehaviour
 {
     public GameObject player;
+    public GameObject pf;
     public GameObject cylinder;
     public Rigidbody playerRb;
+    public GameObject g1;
+    public GameObject g2;
+    //public Rigidbody cylRb;
     public Text hRotation;
     public Text vRotation;
     public Text multT;
@@ -79,21 +83,39 @@ public class Launch : MonoBehaviour
                 CrotationX(-1);
             }
         }
+        if(xQuat > 0)
+        {
+            g1.SetActive(false);
+        } else if(xQuat < 0)
+        {
+            g2.SetActive(false);
+        } else if(xQuat == 0)
+        {
+            g1.SetActive(true);
+            g2.SetActive(true);
+        }
         if (Input.GetKey("down"))
         {
-            if (yQuat != -45)
+            if (yQuat != 0)
             {
                 yQuat--;
                 CrotationX(1);
             }
         }
+        if(Input.GetKey("escape"))
+        {
+            xQuat = 0;
+            yQuat = 0;
+            RotateRespawn();
+        }
         //The player launches
         if (Input.GetMouseButtonDown(0) && count >= 0)
         {
+                cylinder.SetActive(false);
 /*            print(count);
 */            count = 0;
 /*            print(count);
-*/            rotation = Quaternion.Euler(yQuat, xQuat, 0f);
+*/            rotation = Quaternion.Euler(-yQuat,xQuat, 0f);
             print(rotation);
             force = Vector3.forward;
             force = rotation * force;
@@ -162,6 +184,7 @@ public class Launch : MonoBehaviour
         playerRb.velocity = Vector3.zero;
         playerRb.useGravity = false;
         player.transform.position = startPos;
+        cylinder.SetActive(true);
         if(cond == true)
         {
             player.GetComponent<LivesManager>().death = true;
@@ -176,7 +199,11 @@ public class Launch : MonoBehaviour
     void CrotationY(float r)
     {
         //cylinder.transform.Rotate(Vector3.up * r);
-        player.transform.Rotate(Vector3.up * r);
+        pf.transform.Rotate(Vector3.up * r);
+    }
+    void RotateRespawn()
+    {
+        pf.transform.rotation = Quaternion.Euler(0f,0f,0f);
     }
 
 }
