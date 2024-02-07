@@ -11,6 +11,7 @@ public class LivesManager : MonoBehaviour
     public bool death;
     public bool nextLevel;
     public int lives = 3;
+    public Text livesText;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,7 @@ public class LivesManager : MonoBehaviour
             if (death)
             {
                 lives--;
+                livesText.text = lives.ToString();
                 
                 livesLeft[lives].SetActive(false);
                 death = false;

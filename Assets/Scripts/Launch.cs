@@ -69,7 +69,7 @@ public class Launch : MonoBehaviour
 */            }
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && mult < 20)
         {
             mult += 1;
             count += 1;
@@ -111,6 +111,7 @@ public class Launch : MonoBehaviour
         //The player launches
         if (Input.GetMouseButtonDown(0) && count >= 0)
         {
+            launched = true;
                 cylinder.SetActive(false);
 /*            print(count);
 */            count = 0;
