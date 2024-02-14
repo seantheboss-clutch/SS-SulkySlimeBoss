@@ -69,7 +69,7 @@ public class Launch : MonoBehaviour
 */            }
         }
 
-        if (Input.GetMouseButtonDown(1) && mult < 20)
+        if (Input.GetMouseButtonDown(1) && mult < 10)
         {
             mult += 1;
             count += 1;
@@ -150,32 +150,24 @@ public class Launch : MonoBehaviour
             reSpawn(false);
 
         }
-        else
-        {
-            reSpawn(true);
-        }
+        reSpawn(false);
         if(collision.gameObject.tag == "quad")
         {
             reSpawn(true);
             score += 50;
         }
-        if (collision.gameObject.tag == "collectable")
-        {
-          score += 500;
-/*            SceneManager.LoadScene("Level2");
-*/       }
-       if(score >= 500)
+       if(score >= 500 && score <= 1000)
        {
             Scene sc = SceneManager.GetActiveScene();
             if(sc.name == "Level1")
             {
                 SceneManager.LoadScene("Level2");
-            } else
+                score = 0;
+            } else if(score >= 1000)
             {
-                SceneManager.LoadScene("Menu");
+                SceneManager.LoadScene("Win");
             }
-            
-            score = 0;
+       
         }
     }
  
